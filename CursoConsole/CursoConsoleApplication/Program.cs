@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
+
 
 namespace CursoConsole
 {
     class Program
     {
-
-        
 
         static void Main(string[] args)
         {
@@ -51,10 +49,7 @@ namespace CursoConsole
                         break;
                     case 3:
                        
-                      Console.Write("Saindo...");
-                      TimerCallback callback = new TimerCallback(Tick);
-
-                      
+                      Console.Write("Saindo");
 
                       for (int i=0;i<10 ;i++ )
                       {
@@ -66,6 +61,7 @@ namespace CursoConsole
                         
                         break;
                     default:
+                        opcao = 3;
                         Console.WriteLine("Operação Inválida!");
                         break;
                 }
@@ -237,10 +233,6 @@ namespace CursoConsole
 
             } while (opcao != 3);
            
-        }
-        static public void Tick(Object stateInfo)
-        {
-            Console.WriteLine("Tick: {0}", DateTime.Now.ToString("h:mm:ss"));
         }
 
     }
