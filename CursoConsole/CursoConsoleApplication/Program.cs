@@ -3,14 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace CursoConsole
 {
     class Program
     {
+
+        
+
         static void Main(string[] args)
         {
+            
             int opcao, operacao = 0;
             String cliente = "", produto = "";
             List<String> LisCli = new List<string>();
@@ -44,8 +50,20 @@ namespace CursoConsole
                         operacao = Convert.ToInt32(Console.ReadLine());
                         break;
                     case 3:
-                        Console.WriteLine("Saindo...");
+                       
+                      Console.Write("Saindo...");
+                      TimerCallback callback = new TimerCallback(Tick);
 
+                      
+
+                      for (int i=0;i<10 ;i++ )
+                      {
+                          
+                          Thread.Sleep(100);
+                          Console.Write(".");
+                          
+                      }
+                        
                         break;
                     default:
                         Console.WriteLine("Operação Inválida!");
@@ -217,11 +235,13 @@ namespace CursoConsole
                     }
                 }
 
-            } while (opcao != 5);
-            {
-                Console.WriteLine("Opção Inválida");
-                Console.ReadKey();
-            }
+            } while (opcao != 3);
+           
         }
+        static public void Tick(Object stateInfo)
+        {
+            Console.WriteLine("Tick: {0}", DateTime.Now.ToString("h:mm:ss"));
+        }
+
     }
 }
