@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CursoConsoleApplication;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,13 @@ namespace CursoConsole
 
         static void Main(string[] args)
         {
+            inicio:
             
             int opcao, operacao = 0;
-            String cliente = "", produto = "";
-            List<String> LisCli = new List<string>();
-            ArrayList ListProduto = new ArrayList();
+            Cliente cliente = new Cliente();
+            List<Cliente> LisCli = new List<Cliente>();
+            Produto produto = new Produto();
+            List<Produto> ListProduto = new List<Produto>();
 
             Console.Clear();
             Console.WriteLine("1- Cliente");
@@ -38,6 +41,7 @@ namespace CursoConsole
                         Console.WriteLine("2- Consultar Cliente");
                         Console.WriteLine("3- Consultar Cliente por Nome");
                         Console.WriteLine("4- Remover Cliente por Nome");
+                        Console.WriteLine("5- Retornar ao Menu Principal");
                         operacao = Convert.ToInt32(Console.ReadLine());
                         break;
                     case 2:
@@ -45,6 +49,7 @@ namespace CursoConsole
                         Console.WriteLine("2- Consultar Produto");
                         Console.WriteLine("3- Consultar Produto por Nome");
                         Console.WriteLine("4- Remover Produto por Nome");
+                        Console.WriteLine("5- Retornar ao Menu Principal");
                         operacao = Convert.ToInt32(Console.ReadLine());
                         break;
                     case 3:
@@ -71,7 +76,17 @@ namespace CursoConsole
                     if (operacao == 1)
                     {
                         Console.WriteLine("Informe o nome do Cliente:");
-                        cliente = Console.ReadLine();
+                        cliente.Nome = Console.ReadLine();
+                        Console.WriteLine("Informe o CPF do Cliente:");
+                        cliente.Cpf = Convert.ToInt64(Console.ReadLine());
+                        Console.WriteLine("Informe o Sexo do Cliente:");
+                        cliente.Sexo = Convert.ToChar(Console.ReadLine());
+                        Console.WriteLine("Informe o Idade do Cliente:");
+                        cliente.Idade = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Informe o Telefone do Cliente:");
+                        cliente.Telefone = Convert.ToInt64(Console.ReadLine());
+                        Console.WriteLine("Informe o Endereço do Cliente:");
+                        cliente.Endereco = Console.ReadLine();
                         LisCli.Add(cliente);
                         Console.Clear();
                         Console.WriteLine("Cliente cadastrado com SUCESSO!");
@@ -80,10 +95,15 @@ namespace CursoConsole
                     }
                     else if (operacao == 2)
                     {
-                        foreach (String cli in LisCli)
+                        foreach (Cliente cli in LisCli)
                         {
 
-                            Console.WriteLine("Nome do Cliente: " + cli);
+                            Console.WriteLine("Nome do Cliente: " + cli.Nome);
+                            Console.WriteLine("CPF do Cliente: " + cli.Cpf);
+                            Console.WriteLine("Sexo do Cliente: " + cli.Sexo);
+                            Console.WriteLine("Idade do Cliente: " + cli.Idade);
+                            Console.WriteLine("Telefone do Cliente: " + cli.Telefone);
+                            Console.WriteLine("Endereço do Cliente: " + cli.Endereco);
                         }
                         if (LisCli.Count <= 0)
                         {
@@ -99,10 +119,11 @@ namespace CursoConsole
                         Console.WriteLine("informe o nome para pesquisa");
                         String nomeAux;
                         nomeAux = Console.ReadLine();
-                        foreach(String cli in LisCli){
-                            if(nomeAux.Equals(cli)){
+                        if(LisCli.Count<=0){
+                        foreach(Cliente cli in LisCli){
+                            if(nomeAux.Equals(cli.Nome)){
                                 Console.Clear();
-                                Console.WriteLine("Achou mizeravi: "+nomeAux);
+                                Console.WriteLine("Achou mizeravi: "+cli.Nome);
                                 Console.ReadKey();
                                 Console.Clear();
                                 break;
@@ -115,15 +136,21 @@ namespace CursoConsole
                                 Console.Clear();
                             }
                         }
+                        Console.Clear();
+                        Console.WriteLine("Não existe cliente cadastrado com esse nome: " + nomeAux);
+                        Console.ReadKey();
+                        Console.Clear();
+                        }
+                        
 
                     }
                     else if(operacao == 4){
                         Console.WriteLine("informe o nome para Remoção");
                         String nomeAux;
                         nomeAux = Console.ReadLine();
-                        foreach (String cli in LisCli)
+                        foreach (Cliente cli in LisCli)
                         {
-                            if (nomeAux.Equals(cli))
+                            if (nomeAux.Equals(cli.Nome))
                             {
                                 LisCli.Remove(cli);
                                 Console.Clear();
@@ -141,6 +168,9 @@ namespace CursoConsole
                             }
                         }
 
+                    }else if(operacao == 5){
+                        
+                        goto inicio;
                     }else
                     {
                         Console.Write("Inválido");
@@ -151,8 +181,14 @@ namespace CursoConsole
                 {
                     if (operacao == 1)
                     {
-                        Console.WriteLine("Informe o nome do Produto:");
-                        produto = Console.ReadLine();
+                        Console.WriteLine("Informe o Código do Produto:");
+                        produto.Codigo = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Informe a Descrição do Produto:");
+                        produto.Descricao = Console.ReadLine();
+                        Console.WriteLine("Informe o Valor do Produto:");
+                        produto.Valor = (float)Convert.ToDecimal(Console.ReadLine());
+                        Console.WriteLine("Informe a Fabricante do Produto:");
+                        produto.Fabricante = Console.ReadLine();
                         ListProduto.Add(produto);
                         Console.Clear();
                         Console.WriteLine("Produto cadastrado com SUCESSO!");
@@ -161,10 +197,13 @@ namespace CursoConsole
                     }
                     else if (operacao == 2)
                     {
-                        foreach (String prod in ListProduto)
+                        foreach (Produto prod in ListProduto)
                         {
 
-                            Console.WriteLine("Nome do Produto: " + prod);
+                            Console.WriteLine("Código do Produto: " + prod.Codigo);
+                            Console.WriteLine("Descrição do Produto: " + prod.Descricao);
+                            Console.WriteLine("Valor do Produto: " + prod.Valor);
+                            Console.WriteLine("Fabricante do Produto: " + prod.Fabricante);
                         }
 
                         if (ListProduto.Count <= 0)
@@ -179,11 +218,12 @@ namespace CursoConsole
                     {
                         Console.WriteLine("Informe a descrição do produto");
                         String prodAux=Console.ReadLine();
-                        foreach(String prod in ListProduto){
+                        if(ListProduto.Count<=0){
+                        foreach(Produto prod in ListProduto){
                             
-                            if(prodAux.Equals(prod)){
+                            if(prodAux.Equals(prod.Descricao)){
                                 Console.Clear();
-                                Console.WriteLine("Produto encontrado: " + prodAux);
+                                Console.WriteLine("Produto encontrado: " + prod.Descricao);
                                 Console.ReadKey();
                                 Console.Clear();
                             }
@@ -195,6 +235,11 @@ namespace CursoConsole
                                 Console.Clear();
                             }
 
+                        }
+                            Console.Clear();
+                            Console.WriteLine("Produto " + prodAux + " não encontrado ");
+                            Console.ReadKey();
+                            Console.Clear();
                         }
                     }
                     else if (operacao == 4)
@@ -202,14 +247,14 @@ namespace CursoConsole
 
                         Console.WriteLine("Informe a descrição do produto para a Remoção");
                         String prodAux = Console.ReadLine();
-                        foreach (String prod in ListProduto)
+                        foreach (Produto prod in ListProduto)
                         {
 
-                            if (prodAux.Equals(prod))
+                            if (prodAux.Equals(prod.Descricao))
                             {
                                 ListProduto.Remove(prod);
                                 Console.Clear();
-                                Console.WriteLine("Produto removido com SUCESSO!: " + prodAux);
+                                Console.WriteLine("Produto removido com SUCESSO!: " + prod.Descricao);
                                 Console.ReadKey();
                                 Console.Clear();
                             }
@@ -223,6 +268,8 @@ namespace CursoConsole
 
                         }
 
+                    }else if(operacao==5){
+                        goto inicio;
                     }else
                     {
                         Console.WriteLine("Inválido");
